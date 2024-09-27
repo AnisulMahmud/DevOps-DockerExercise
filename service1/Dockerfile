@@ -15,7 +15,7 @@ RUN javac src/Main.java
 # # Run the Java application
 # CMD [ "java", "Main" ]
 
-# Expose the port your application runs on
+# Expose the port
 EXPOSE 8199
 
 # Specify the entry point to run the compiled java class

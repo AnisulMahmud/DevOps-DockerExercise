@@ -9,7 +9,7 @@ import java.util.stream.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         // for creating http server to listen on port 8199
-        // ServerSocket serverSocket = new ServerSocket(8199, 50, InetAddress.getByName("0.0.0.0"));
+
         ServerSocket serverSocket = new ServerSocket(8199);
         System.err.println("Service1 is running on port 8199");
 
@@ -21,13 +21,20 @@ public class Main {
             // getting own information
             String service1 = getService1Info();
 
+            // getting service 2 information
+            String service2 = getService2Info();
+
+
             // http request
             writer.println("HTTP/1.1 200 OK");
             writer.println("Content-Type: text/plain");
             writer.println("Connection: close");
             writer.println();
-            writer.println("Service1 information:");
+            writer.println("Service 1 information:");
             writer.println(service1);
+            writer.println();
+            writer.println("Service 2 information:");
+            writer.println(service2);
             writer.close();
             clientSocket.close();
         }
@@ -48,19 +55,10 @@ public class Main {
         // Available disk
         File root = new File("/");
         long free = root.getFreeSpace();
-        double freeGB = free / 1e9; // Convert bytes to gigabytes
+        double freeGB = free / (1024*1024*1024); // Convert bytes to gigabytes
         info.append("Free space: ").append(String.format("%.2f", freeGB)).append(" GB\n");
 
-        // // Last boot time
-        // ProcessBuilder processBuilder2 = new ProcessBuilder("sh", "-c", "uptime -p");
-        // Process process2 = processBuilder2.start();
-        // String lastBootTime = outputFromProcess(process2);
-        // if (lastBootTime.isEmpty()) {
-        //     info.append("Last Boot time: N/A\n");
-        //     System.err.println("Failed to retrieve last boot time.");
-        // } else {
-        //     info.append("Last Boot time: ").append(lastBootTime).append("\n");
-        // }
+
 
         // Last boot time using RuntimeMXBean
         RuntimeMXBean runtimeMX = ManagementFactory.getRuntimeMXBean();
@@ -71,6 +69,21 @@ public class Main {
         return info.toString();
     }
 
+    private static String getService2Info() throws Exception {
+        URI service2Uri = new URI("http://service2:5000");
+        URL service2Url = service2Uri.toURL();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(service2Url.openStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+
+        while ((inputLine = input.readLine()) != null) {
+            response.append(inputLine).append("\n");
+        }
+        input.close();
+        return response.toString();
+    }
+ 
     private static String outputFromProcess(Process pro) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(pro.getInputStream()));
         return reader.lines().collect(Collectors.joining("\n"));
