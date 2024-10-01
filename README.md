@@ -35,6 +35,4 @@ This project aims to create two interworking services (started and stopped toget
 
   -> Or you can open your browser and navigate to http://localhost:8199
 
-## Output
-  ![image](https://github.com/user-attachments/assets/6bea338f-9ef0-4851-819c-06565cb37511)
 
