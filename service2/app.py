@@ -31,6 +31,7 @@ def service2_info():
     statvfs = os.statvfs('/')
     free = statvfs.f_frsize * statvfs.f_bavail
     free_gb = free / (1024 * 1024 * 1024)  
+    info["FreeSpaceGB"] = f"{free_gb:.2f}"
 
 
     # Last boot time
