@@ -8,8 +8,8 @@ import java.util.stream.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        
         // for creating http server to listen on port 8199
-
         ServerSocket serverSocket = new ServerSocket(8199);
         System.err.println("Service1 is running on port 8199");
 
@@ -55,7 +55,7 @@ public class Main {
         // Available disk
         File root = new File("/");
         long free = root.getFreeSpace();
-        double freeGB = free / (1024*1024*1024); // Convert bytes to gigabytes
+        double freeGB = free / (1024*1024*1024); 
         info.append("Free space: ").append(String.format("%.2f", freeGB)).append(" GB\n");
 
 

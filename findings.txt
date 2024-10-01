@@ -1,0 +1,18 @@
+In this exercise I work with two services and setup the Docker files accrodingly.
+Service1 and Service 2 both running in different not connected containers, but I find
+that they share some tings with host.
+
+1. service 1's and service 2's containers have access to hsot file system. When I show the Available disk space
+So both of them  can check the free space on host.
+2. After that I use "ps" on both services to know about the running process. Both contianer are not connected,
+but as I am geting info from host.
+3. The most key findings for me is about the network.
+   Service 1(devops-dockerexercise_service1) port 8199
+   Service2 (devops-dockerexercise_service2) port 5000
+Here we can see that each container have its on IP for its network and different ports as
+well. But both containers share the same docker network [4f8d624f5f12   devops-dockerexercise_default]
+and this shared networkallows them to commmunicate with each other.
+
+Lastly, docker's container is from my thinking efficient way to run the application. They run
+on isolated but share the host's things, which also makes docker an efficient tool to deploy 
+application isolated yet interconnected application. 

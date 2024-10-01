@@ -1,7 +1,5 @@
 FROM openjdk:17-jdk-alpine
 
-# Install bash
-# RUN apk add --no-cache bash
 
 # Set the working directory
 WORKDIR /app
@@ -12,8 +10,6 @@ COPY src/ /app/src/
 # Compile the java program
 RUN javac src/Main.java
 
-# # Run the Java application
-# CMD [ "java", "Main" ]
 
 # Expose the port
 EXPOSE 8199
