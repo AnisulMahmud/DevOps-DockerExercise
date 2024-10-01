@@ -5,7 +5,6 @@ import java.net.*;
 import java.util.Date;
 import java.util.stream.*;
 
-
 public class Main {
     public static void main(String[] args) throws Exception {
         
@@ -24,48 +23,48 @@ public class Main {
             // getting service 2 information
             String service2 = getService2Info();
 
-
             // http request
             writer.println("HTTP/1.1 200 OK");
-            writer.println("Content-Type: text/plain");
+            writer.println("Content-Type: application/json");
             writer.println("Connection: close");
             writer.println();
-            writer.println("Service 1 information:");
-            writer.println(service1);
-            writer.println();
-            writer.println("Service 2 information:");
-            writer.println(service2);
+
+            // Combine service information into JSON
+            String jsonResponse = "{\"service1\":" + service1 + ",\"service2\":" + service2 + "}";
+            writer.println(jsonResponse);
             writer.close();
             clientSocket.close();
         }
     }
 
+    
     private static String getService1Info() throws Exception {
         StringBuilder info = new StringBuilder();
+        info.append("{");
 
         // ip address
         InetAddress ip = InetAddress.getLocalHost();
-        info.append("Ip Address: ").append(ip.getHostAddress()).append("\n");
+        info.append("\"IpAddress\":\"").append(ip.getHostAddress()).append("\",");
 
         // Running processes
         ProcessBuilder processBuilder = new ProcessBuilder("ps", "ax");
         Process process = processBuilder.start();
-        info.append("Processes:\n").append(outputFromProcess(process)).append("\n");
+        info.append("\"Processes\":[");
+        info.append(outputFromProcess(process));
+        info.append("],");
 
         // Available disk
         File root = new File("/");
         long free = root.getFreeSpace();
         double freeGB = free / (1024*1024*1024); 
-        info.append("Free space: ").append(String.format("%.2f", freeGB)).append(" GB\n");
+        info.append("\"FreeSpaceGB\":\"").append(String.format("%.2f", freeGB)).append("\",");
 
-
-
-        // Last boot time using RuntimeMXBean
+        // Last boot time 
         RuntimeMXBean runtimeMX = ManagementFactory.getRuntimeMXBean();
         Date startTime = new Date(runtimeMX.getStartTime());
-        info.append("Last Boot time: ").append(startTime).append("\n");
+        info.append("\"LastBootTime\":\"").append(startTime.toString()).append("\"");
 
-
+        info.append("}");
         return info.toString();
     }
 
@@ -78,7 +77,7 @@ public class Main {
         StringBuilder response = new StringBuilder();
 
         while ((inputLine = input.readLine()) != null) {
-            response.append(inputLine).append("\n");
+            response.append(inputLine);
         }
         input.close();
         return response.toString();
@@ -86,6 +85,8 @@ public class Main {
  
     private static String outputFromProcess(Process pro) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(pro.getInputStream()));
-        return reader.lines().collect(Collectors.joining("\n"));
+        return reader.lines()
+                     .map(line -> "\"" + line.replace("\"", "\\\"") + "\"")
+                     .collect(Collectors.joining(","));
     }
 }

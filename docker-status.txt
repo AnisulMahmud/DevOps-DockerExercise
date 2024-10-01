@@ -1,12 +1,11 @@
+Output of docker container ls:
 CONTAINER ID   IMAGE                            COMMAND               CREATED          STATUS          PORTS                                       NAMES
-d2bfa8ffafcf   devops-dockerexercise_service2   "python app.py"       19 seconds ago   Up 19 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   devops-dockerexercise_service2_1
-1565b89b59b4   devops-dockerexercise_service1   "java -cp src Main"   19 seconds ago   Up 19 seconds   0.0.0.0:8199->8199/tcp, :::8199->8199/tcp   devops-dockerexercise_service1_1
+b3fa978b318c   devops-dockerexercise_service2   "python app.py"       25 seconds ago   Up 24 seconds   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   devops-dockerexercise_service2_1
+8edcca99f894   devops-dockerexercise_service1   "java -cp src Main"   25 seconds ago   Up 24 seconds   0.0.0.0:8199->8199/tcp, :::8199->8199/tcp   devops-dockerexercise_service1_1
 
-
-Docker Networks:
-
+Output of docker network ls:
 NETWORK ID     NAME                            DRIVER    SCOPE
-a8890a5b36b8   bridge                          bridge    local
+d4f8138592ba   bridge                          bridge    local
 4f8d624f5f12   devops-dockerexercise_default   bridge    local
 d9685ac2ad94   host                            host      local
 78db2f630f59   none                            null      local

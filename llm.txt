@@ -7,7 +7,7 @@ Also want to get the good format for the running process.
 
 ## How LLM helped:
 1. It provided explanations and examples of Linux commands, which helped me understand how to use them effectively.
-2. It helped me format the output in a clear structure.
+2. It helped me format the output in a JSON format.
 
 
 ## Mistakes LLM did:
